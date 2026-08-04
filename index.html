@@ -49,11 +49,11 @@
   a:hover { text-decoration: underline; }
   .mono { font-family: 'Courier Prime', 'Courier New', monospace; }
 
-  /* Top Navigation Bar (replaces the old sidebar) */
+  /* Top Navigation Bar — hamburger trigger (replaces the old sidebar / pill nav) */
   .topbar {
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 60;
       background: var(--primary);
       border-bottom: 4px solid var(--accent);
       box-shadow: 0 2px 10px rgba(0,0,0,0.15);
@@ -62,70 +62,106 @@
   .topbar-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 12px 20px;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
   }
 
   .topbar .brand {
-      color: var(--accent);
+      color: #ffffff;
       font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      font-size: 15px;
+      letter-spacing: 0.2px;
       white-space: nowrap;
-      flex-shrink: 0;
   }
 
-  nav.toc {
+  .menu-toggle {
       display: flex;
-      flex-wrap: nowrap;
-      gap: 4px 6px;
-      flex: 1;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-  }
-
-  nav.toc::-webkit-scrollbar { display: none; }
-
-  nav.toc a {
-      display: inline-flex; gap: 6px; align-items: center;
-      color: #dbe1ea;
-      padding: 6px 10px; border-radius: 20px;
-      font-size: 12px; font-weight: 600;
-      white-space: nowrap;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px; height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
       flex-shrink: 0;
   }
 
-  nav.toc a .num {
-      font-family: 'Courier Prime', monospace;
-      font-size: 10.5px; color: var(--accent);
+  .menu-toggle span {
+      display: block;
+      width: 24px; height: 3px;
+      border-radius: 2px;
+      background: var(--accent);
   }
 
-  nav.toc a:hover {
-      background: rgba(255, 255, 255, 0.12);
-      color: white;
+  /* Full-screen overlay menu */
+  .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(-100%);
+      transition: transform 0.32s ease;
+      overflow-y: auto;
+      border-left: 6px solid var(--secondary);
+      border-right: 6px solid var(--secondary);
   }
 
-  nav.toc a.active {
-      background: rgba(255, 215, 0, 0.18);
-      color: white;
-      border-color: var(--accent);
+  .menu-overlay.open { transform: translateY(0); }
+
+  .menu-overlay-top {
+      display: flex;
+      justify-content: center;
+      padding: 22px 0 8px;
   }
 
-  @media (max-width: 700px) {
-      .topbar .brand { display: none; }
-      .topbar-inner { padding: 10px 14px; }
-      nav.toc { gap: 4px; justify-content: flex-start; }
-      nav.toc a { padding: 5px 10px; font-size: 11.5px; }
+  .menu-close {
+      width: 40px; height: 40px;
+      border: 2px solid #333;
+      border-radius: 8px;
+      background: none;
+      font-size: 20px;
+      line-height: 1;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .menu-overlay nav.toc {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 26px 50px;
+      max-width: 640px;
+      width: 100%;
+      margin: 0 auto;
+  }
+
+  .menu-overlay nav.toc a {
+      padding: 18px 4px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--primary);
+  }
+
+  .menu-overlay nav.toc a:first-child { color: var(--secondary); }
+
+  .menu-overlay nav.toc a:hover,
+  .menu-overlay nav.toc a.active {
+      color: var(--secondary);
   }
 
   /* Main Container */
   main { max-width: 1000px; margin: 0 auto; padding: 20px 20px 80px; }
+
 
   /* Header / Hero */
   header.hero {
@@ -209,12 +245,12 @@
 
   /* Technical Boxes & Formulas */
   .formula-box {
-      background: var(--primary); color: var(--accent);
+      background: #2c4a7c; color: var(--accent);
       padding: 20px; border-radius: 8px;
       font-family: 'Courier Prime', 'Courier New', monospace;
       overflow-x: auto; margin: 20px 0;
       text-align: center; font-size: 1.05rem;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.25);
   }
 
   .callout {
@@ -425,21 +461,32 @@
 </head>
 <body>
 
-<!-- STICKY TOP NAVIGATION (replaces the old sidebar) -->
+<!-- STICKY TOP BAR WITH HAMBURGER MENU -->
 <div class="topbar">
   <div class="topbar-inner">
-    <nav class="toc" id="toc">
-      <a href="#abstract"><span class="num">00</span> Abstract</a>
-      <a href="#intro"><span class="num">01</span> Introduction</a>
-      <a href="#variables"><span class="num">02</span> Variables</a>
-      <a href="#model"><span class="num">03</span> Model &amp; OLS</a>
-      <a href="#hetero"><span class="num">04</span> Heteroscedasticity</a>
-      <a href="#multicol"><span class="num">05</span> Multicollinearity</a>
-      <a href="#final"><span class="num">06</span> Final Model</a>
-      <a href="#conclusion"><span class="num">07</span> Concluding Remarks</a>
-      <a href="#refs"><span class="num">08</span> References</a>
-    </nav>
+    <span class="brand">Breaking Down the Bars</span>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</div>
+
+<!-- FULL-SCREEN OVERLAY MENU -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-overlay-top">
+    <button class="menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+  </div>
+  <nav class="toc" id="toc">
+    <a href="#abstract">Abstract</a>
+    <a href="#intro">Introduction</a>
+    <a href="#variables">Variables</a>
+    <a href="#model">Model &amp; OLS</a>
+    <a href="#hetero">Heteroscedasticity</a>
+    <a href="#multicol">Multicollinearity</a>
+    <a href="#final">Final Model</a>
+    <a href="#conclusion">Concluding Remarks</a>
+    <a href="#refs">References</a>
+  </nav>
 </div>
 
   <!-- MAIN CONTENT AREA -->
@@ -474,7 +521,7 @@
 
     <!-- ABSTRACT -->
     <section id="abstract">
-      <h2>00. Abstract</h2>
+      <h2>Abstract</h2>
       <p class="lede">The prison population is a crucial indicator of crime, law enforcement effectiveness, and social equity.</p>
       <p>This study investigates the determinants of the total inmate population across Indian states for the year 2022, focusing on seven key socio-economic and law-enforcement variables: the percentage of the population living below the multidimensional poverty index, the literacy rate, the employment rate, the crime rate, police expenditure, police strength, and per capita income. We built an econometric model to examine how these variables influence the inmate population.</p>
       <p>Preliminary results indicate significant associations between poverty, crime rate, and police strength with the inmate population — suggesting a complex interplay between socio-economic conditions and law-enforcement practice. The study aims to provide insight for policymakers seeking to address the underlying causes of incarceration and foster a more just and equitable criminal-justice system.</p>
@@ -482,7 +529,7 @@
 
     <!-- INTRODUCTION -->
     <section id="intro">
-      <h2>01. Introduction &amp; Objectives</h2>
+      <h2>Introduction &amp; Objectives</h2>
       <p>Crime is not just a social issue — it is a reflection of deeper socio-economic fractures within a nation. In India, the surge in criminal activity over the last decade has stirred widespread concern, with cognizable crimes under IPC + SLL crossing 4.5 million in 2022 alone.</p>
       
       <div class="phase">
@@ -498,7 +545,7 @@
 
     <!-- VARIABLES -->
     <section id="variables">
-      <h2>02. Model Variables</h2>
+      <h2>Model Variables</h2>
       <p class="lede">Seven explanatory variables, each grounded in a socio-economic or law-enforcement dimension linked to incarceration.</p>
 
       <div class="var-grid">
@@ -547,7 +594,7 @@
 
     <!-- MODEL & OLS -->
     <section id="model">
-      <h2>03. Baseline OLS Regression Model</h2>
+      <h2>Baseline OLS Regression Model</h2>
       <p>The dependent variable is the total prison population of Indian states and union territories. The baseline regression is specified as:</p>
 
       <div class="formula-box">
@@ -758,7 +805,7 @@
     <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff;">
       <img src="res_x1.jpg" alt="Residuals vs Crime Rate" style="width: 100%; height: auto; display: block; border-radius: 4px; margin-bottom: 8px;">
       <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
-        Graph 5.1: Residuals vs. Crime Rate
+        Figure 3: Residuals vs. Crime Rate
       </figcaption>
     </div>
 
@@ -766,7 +813,7 @@
     <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff;">
       <img src="res_x2.jpg" alt="Residuals vs Police Expenditure" style="width: 100%; height: auto; display: block; border-radius: 4px; margin-bottom: 8px;">
       <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
-        Graph 5.2: Residuals vs. Police Expenditure
+        Figure 4: Residuals vs. Police Expenditure
       </figcaption>
     </div>
 
@@ -774,7 +821,7 @@
     <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff;">
       <img src="res_x3.jpg" alt="Residuals vs Police Strength" style="width: 100%; height: auto; display: block; border-radius: 4px; margin-bottom: 8px;">
       <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
-        Graph 5.3: Residuals vs. Police Strength
+        Figure 5: Residuals vs. Police Strength
       </figcaption>
     </div>
 
@@ -782,7 +829,7 @@
     <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff;">
       <img src="res_x4.jpg" alt="Residuals vs Unemployment Rate" style="width: 100%; height: auto; display: block; border-radius: 4px; margin-bottom: 8px;">
       <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
-        Graph 5.4: Residuals vs. Unemployment Rate
+        Figure 6: Residuals vs. Unemployment Rate
       </figcaption>
     </div>
 
@@ -790,7 +837,7 @@
     <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff;">
       <img src="res_x5.jpg" alt="Residuals vs Literacy Rate" style="width: 100%; height: auto; display: block; border-radius: 4px; margin-bottom: 8px;">
       <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
-        Graph 5.5: Residuals vs. Literacy Rate
+        Figure 7: Residuals vs. Literacy Rate
       </figcaption>
     </div>
 
@@ -798,7 +845,7 @@
     <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff;">
       <img src="res_x6.jpg" alt="Residuals vs Per Capita Income" style="width: 100%; height: auto; display: block; border-radius: 4px; margin-bottom: 8px;">
       <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
-        Graph 5.6: Residuals vs. Per Capita Income
+        Figure 8: Residuals vs. Per Capita Income
       </figcaption>
     </div>
 
@@ -806,7 +853,7 @@
     <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff; grid-column: 1 / -1; max-width: 50%; justify-self: center; width: 100%;">
       <img src="res_x7.jpg" alt="Residuals vs Poverty Index" style="width: 100%; height: auto; display: block; border-radius: 4px; margin-bottom: 8px;">
       <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
-        Graph 5.7: Residuals vs. Poverty Index
+        Figure 9: Residuals vs. Poverty Index
       </figcaption>
     </div>
 
@@ -926,11 +973,11 @@
 
     <!-- HETEROSCEDASTICITY -->
 <section id="hetero">
-  <h2>04. Heteroscedasticity: Remedial Measures</h2>
+  <h2>Heteroscedasticity: Remedial Measures</h2>
   
   <div class="phase">
     <div class="phase-title">Remedy Step A: Weighted Least Squares (WLS)</div>
-    <p>Weights inversely proportional to residual variance were applied to down-weight high-variance observations. While coefficients adjusted, post-WLS Breusch-Pagan p-value remained 0.0002, again failing to fully solve heteroscedasticity[cite: 1].</p>
+    <p>Weights inversely proportional to residual variance were applied to down-weight high-variance observations. While coefficients adjusted, post-WLS Breusch-Pagan p-value remained 0.0002, again failing to fully solve heteroscedasticity.</p>
   </div>
 
   <div class="phase">
@@ -1013,7 +1060,7 @@
 </section>
    <!-- MULTICOLLINEARITY & PCA -->
 <section id="multicol">
-  <h2>05. Multicollinearity &amp; Principal Component Analysis (PCA)</h2>
+  <h2>Multicollinearity &amp; Principal Component Analysis (PCA)</h2>
   
   <p style="font-size: 0.9rem; line-height: 1.6;">
     Since removing individual variables failed to resolve multicollinearity, we applied <strong>Principal Component Analysis (PCA)</strong> to eliminate collinearity by transforming correlated predictors into orthogonal (uncorrelated) Principal Components (PCs).
@@ -1175,7 +1222,7 @@
 <!-- CORRELATION HEATMAP OF PRINCIPAL COMPONENTS -->
   <figure class="svg-plot-container" style="margin: 25px 0; padding: 15px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff;">
     <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.9rem; font-weight: bold; color: var(--primary); margin-bottom: 10px; text-align: center;">
-      FIG 6.1 Correlation Heat map
+      Figure 10: Correlation Heat Map
     </figcaption>
     <img src="pca_heatmap.jpg" alt="Correlation Heatmap for Principal Components PC1 to PC5" style="width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto; border-radius: 6px; border: 1px solid #e2e8f0;">
   </figure>
@@ -1189,7 +1236,7 @@
 
     <!-- FINAL MODEL -->
     <section id="final">
-      <h2>06. Final Corrected Regression Model</h2>
+      <h2>Final Corrected Regression Model</h2>
       <p>With heteroscedasticity, non-normality, and multicollinearity fully addressed, the final model regresses prison population on the five orthogonal components:</p>
 
       <div class="final-model">
@@ -1215,10 +1262,10 @@
 
     <!-- CONCLUSION -->
     <section id="conclusion">
-      <h2>07. Concluding Remarks &amp; Policy Implications</h2>
+      <h2>Concluding Remarks &amp; Policy Implications</h2>
       <p class="lede">Three core statistical hurdles were systematically overcome in this study:</p>
       <ol style="padding-left: 20px;">
-        <li><strong>Residual Non-normality:</strong> Resolved through Log transformation and PCA component structuring[cite: 1].</li>
+        <li><strong>Residual Non-normality:</strong> Resolved through Log transformation and PCA component structuring.</li>
         <li><strong>Heteroscedasticity:</strong> Solved via Log-linear specification.</li>
         <li><strong>Multicollinearity:</strong> Eliminated through Principal Component Analysis.</li>
       </ol>
@@ -1227,7 +1274,7 @@
 
     <!-- REFERENCES -->
     <section id="refs">
-      <h2>08. References</h2>
+      <h2>References</h2>
       <ul class="refs">
         <li><a href="https://ncrb.gov.in" target="_blank" rel="noopener">National Crime Records Bureau (NCRB) — Prison Statistics India (PSI 2022)</a></li>
         <li><a href="https://www.researchgate.net/publication/342819473_ECONOMETRIC_ANALYSIS_ON_CRIME_STATUS_IN_INDIA" target="_blank" rel="noopener">ResearchGate — Econometric Analysis on Crime Status in India</a></li>
@@ -1244,10 +1291,31 @@
 </footer>
 
 <script>
+  // Hamburger menu open/close
+  const menuToggle = document.getElementById('menuToggle');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuClose = document.getElementById('menuClose');
+
+  function openMenu(){
+    menuOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu(){
+    menuOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+  menuToggle.addEventListener('click', openMenu);
+  menuClose.addEventListener('click', closeMenu);
+  menuOverlay.addEventListener('click', (e) => { if(e.target === menuOverlay) closeMenu(); });
+
   // Dynamic Table of Contents Active Highlighting
   const links = Array.from(document.querySelectorAll('#toc a'));
   const sections = links.map(l => document.querySelector(l.getAttribute('href')));
-  
+
+  links.forEach(l => l.addEventListener('click', closeMenu));
+
   function onScroll(){
     let idx = 0;
     const y = window.scrollY + 140;
