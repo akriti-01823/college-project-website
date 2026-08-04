@@ -523,7 +523,7 @@
     <section id="abstract">
       <h2>Abstract</h2>
       <p>The prison population is a crucial indicator of crime, law enforcement effectiveness, and social equity.</p>
-      <p>This study investigates the determinants of the total inmate population across Indian states for the year 2022, focusing on seven key socio-economic and law-enforcement variables: the percentage of the population living below the multidimensional poverty index, the literacy rate, the employment rate, the crime rate, police expenditure, police strength, and per capita income. We built an econometric model to examine how these variables influence the inmate population.</p>
+      <p>This study investigates the determinants of the total inmate population across Indian states for the year 2022, focusing on seven key socio-economic and law-enforcement variables: the percentage of the population living below the multidimensional poverty index, the literacy rate, the employment rate, the crime rate, police expenditure, police strength, and per capita income.An econometric model is built to examine how these variables influence the inmate population.</p>
       <p>Preliminary results indicate significant associations between poverty, crime rate, and police strength with the inmate population — suggesting a complex interplay between socio-economic conditions and law-enforcement practice. The study aims to provide insight for policymakers seeking to address the underlying causes of incarceration and foster a more just and equitable criminal-justice system.</p>
     </section>
 
@@ -647,9 +647,9 @@
       </figcaption>
       <img src="residual_plot.jpg" alt="Residual  Plot" style="width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; border-radius: 6px;">
     </figure>
-<p style="font-size: 0.9rem;"> The normal probability plot (Q-Q plot) showed that the residuals mostly followed a straight line, indicating that they might be approximately normally distributed. We further used the JB test to confirm this assumption. </p>
+<p style="font-size: 0.9rem;"> The normal probability plot (Q-Q plot) showed that the residuals mostly followed a straight line, indicating that they might be approximately normally distributed. Further, the JB test is used to confirm this assumption. </p>
               <p style="margin-top:0;"><strong>Jarque-Bera Test Specification:</strong></p>
-              <p style="font-size: 0.9rem;">The Jarque-Bera statistic  verify the assumption that residuals follow a normal distribution, we used the Jarque-Bera (JB) test. This test assesses whether the skewness (<i>S</i>) and (<i>K</i>) match a normal distribution (<i>S = 0</i>, <i>K</i> = 3). </p>
+              <p style="font-size: 0.9rem;">The Jarque-Bera statistic  verify the assumption that residuals follow a normal distribution. This test assesses whether the skewness (<i>S</i>) and (<i>K</i>) match a normal distribution (<i>S = 0</i>, <i>K</i> = 3). </p>
               <div class="formula-box" style="padding:10px; font-size:0.9rem;">
                 <span><i>JB</i> = </span>
       <span style="display: inline-flex; flex-direction: column; text-align: center; vertical-align: middle; padding: 0 4px;">
@@ -681,7 +681,7 @@
                 </table>
               </div>
 <p style="font-size:0.88rem; color:#444; margin-bottom:0;">
-  <strong>Diagnosis:</strong> Since <i>JB statistic</i> &gt; &chi;<sup>2</sup>(2, 0.05), we reject <i>H</i><sub>0</sub> at 5% level of significance and conclude that residuals are not normally distributed. Thus assumption of normality of residuals is violated. Despite this, OLS estimates remain unbiased.
+  <strong>Diagnosis:</strong> Since <i>JB statistic</i> &gt; &chi;<sup>2</sup>(2, 0.05), <i>H</i><sub>0</sub> is rejected at 5% level of significance and conclude that residuals are not normally distributed. Thus assumption of normality of residuals is violated. Despite this, OLS estimates remain unbiased.
 </p>
            </div>
 
@@ -698,7 +698,7 @@
             </summary>
             <div class="diag-content">
               <p style="margin-top:0;"><strong>ACF and PACF Plots:</strong></p>
-<p style="font-size: 0.9rem;"> To assess the independence of residuals, we used Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF) plots. These plots help detect serial correlation in the residuals. </p>
+<p style="font-size: 0.9rem;"> To assess the independence of residuals, Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF) plots are observed. These plots help detect serial correlation in the residuals. </p>
               <!-- HYPOTHESES SECTION -->
     <p style="font-size: 0.9rem; margin: 12px 0;">
       <strong>Hypotheses (visual check):</strong><br>
@@ -751,7 +751,7 @@
   <p style="font-size: 0.9rem; line-height: 1.6;">The prior step in detecting heteroscedasticity involved the use of residual plots. Specifically, scatter plots of residuals versus fitted values and individual explanatory variables were generated. The plot Figure 1 revealed a funnel-shaped pattern, where the spread of residuals increased with higher fitted values &ndash; suggesting that the variance of the errors might not be constant.
   </p>
 <p style="margin-top:0;"><strong>Global Breusch-Pagan Test:</strong></p>
-              <p style="font-size: 0.9rem;"> To confirm the presence of heteroscedasticity in the regression residuals, we used Breusch-Pagan Test. This test checks whether the variance of residuals is constant across all levels of the independent variables. </p>
+              <p style="font-size: 0.9rem;"> To confirm the presence of heteroscedasticity in the regression residuals, the Breusch-Pagan Test is used. This test checks whether the variance of residuals is constant across all levels of the independent variables. </p>
              <!-- TEST HYPOTHESIS SECTION -->
   <p style="font-size: 0.9rem; margin: 12px 0; line-height: 1.6;">
     <strong>Test Hypothesis:</strong><br>
@@ -791,7 +791,7 @@
 </p>
 
 <p style="font-size: 0.88rem; color: #444; margin-bottom: 0;">
-  <strong>Diagnosis:</strong> Here <i>nR</i><sup>2</sup> = 17.568 and &chi;<sup>2</sup>(7, 0.05) = 14.06717. Since <i>nR</i><sup>2</sup> &gt; &chi;<sup>2</sup>(7, 0.05), we reject <i>H</i><sub>0</sub> at 5% level of significance and conclude that there is heteroscedasticity in the model.
+  <strong>Diagnosis:</strong> Here <i>nR</i><sup>2</sup> = 17.568 and &chi;<sup>2</sup>(7, 0.05) = 14.06717. Since <i>nR</i><sup>2</sup> &gt; &chi;<sup>2</sup>(7, 0.05), <i>H</i><sub>0</sub> is rejected at 5% level of significance and conclude that there is heteroscedasticity in the model.
 </p> <br>   
 <p style="margin-top:0;"><strong>Variable-wise Graphical Inspection:</strong></p>
   <p style="font-size: 0.9rem; line-height: 1.6;">
@@ -861,7 +861,7 @@
 
   <!-- CONCLUDING OBSERVATION PARAGRAPH -->
   <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
-    From these plots, we observe that for most variables, residuals are tightly clustered at lower values and become more dispersed as the variable value rises, indicating possible heteroscedasticity. An exception to this trend is seen in the plot for literacy rate, where the residual spread remains relatively uniform.
+    From these plots, it is observed that for most variables, residuals are tightly clustered at lower values and become more dispersed as the variable value rises, indicating possible heteroscedasticity. An exception to this trend is seen in the plot for literacy rate, where the residual spread remains relatively uniform.
   </p>
 <div class="bp-test-section" style="margin: 25px 0;">
 <p style="margin-top:0;"><strong>Individual Variable BP Testing:</strong></p>
@@ -892,7 +892,7 @@
   
       </div>
 <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
-    Since the p-values for Police Expenditure (<i>p</i> = 0.0082) and Police Strength (<i>p</i> = 0.0021) are less than 0.05 (&alpha;), we reject the null hypothesis and confirm significant evidence of heteroscedasticity. Other variables, including Crime Rate, Poverty Index, Unemployment Rate, Per Capita Income, and Literacy Rate have p-values greater than 0.05, suggesting homoscedasticity.
+    Since the p-values for Police Expenditure (<i>p</i> = 0.0082) and Police Strength (<i>p</i> = 0.0021) are less than 0.05 (&alpha;), the null hypothesis is rejected and confirm significant evidence of heteroscedasticity. Other variables, including Crime Rate, Poverty Index, Unemployment Rate, Per Capita Income, and Literacy Rate have p-values greater than 0.05, suggesting homoscedasticity.
   </p>
                </details>
 
@@ -962,7 +962,7 @@
     </p>
 
     <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">
-      In response, we decided to remove the Literacy Rate variable from the model and re-evaluated the multicollinearity using VIF again. However, the issue persisted. This led us to conclude that removing individual variables was insufficient for resolving the multicollinearity in a meaningful way.
+      In response, it was decided to remove the Literacy Rate variable from the model and re-evaluated the multicollinearity using VIF again. However, the issue persisted. This led us to conclude that removing individual variables was insufficient for resolving the multicollinearity in a meaningful way.
     </p>
   </div>
 </details>
