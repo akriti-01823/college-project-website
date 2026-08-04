@@ -19,26 +19,22 @@
       --dark: black;            /* Dark Grey / Black */
   }
 
-  * { box-sizing: border-box; }
-  html {
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
+  * { 
+      box-sizing: border-box; 
   }
-  html, body {
-      max-width: 100%;
-      overflow-x: hidden;
+  
+  html { 
+      scroll-behavior: smooth; 
   }
-
+  
   body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       line-height: 1.7;
       margin: 0;
       color: var(--dark);
       background-color: #f0f2f5;
+      overflow-x: hidden; /* Prevents horizontal scrolling/zooming out */
   }
-
-  img, table, svg { max-width: 100%; }
 
   h1, h2, h3, h4 {
       color: var(--primary);
@@ -54,10 +50,14 @@
       display: grid;
       grid-template-columns: 280px 1fr;
       min-height: 100vh;
+      width: 100%;
   }
 
+  /* Responsive adjustment for Mobile/Tablet */
   @media (max-width: 992px) {
-      .shell { grid-template-columns: 1fr; }
+      .shell { 
+          grid-template-columns: 1fr; /* Takes full width on mobile */
+      }
   }
 
   /* Sidebar Filecabinet */
@@ -74,12 +74,10 @@
       overflow-y: auto;
   }
 
+  /* HIDE SIDEBAR ON MOBILE */
   @media (max-width: 992px) {
       .filecabinet { 
-          position: relative; 
-          height: auto; 
-          border-right: none; 
-          border-bottom: 5px solid var(--accent);
+          display: none !important; /* Hides sidebar completely on phone view */
       }
   }
 
@@ -124,7 +122,18 @@
   }
 
   /* Main Container */
-  main { max-width: 1000px; margin: 0 auto; padding: 20px 20px 80px; }
+  main { 
+      width: 100%;
+      max-width: 1000px; 
+      margin: 0 auto; 
+      padding: 20px 20px 80px; 
+  }
+
+  @media (max-width: 600px) {
+      main {
+          padding: 10px 12px 40px;
+      }
+  }
 
   /* Header / Hero */
   header.hero {
@@ -137,6 +146,13 @@
       margin-top: 20px;
   }
 
+  @media (max-width: 600px) {
+      header.hero {
+          padding: 2rem 1.25rem;
+          margin-top: 10px;
+      }
+  }
+
   .hero .eyebrow {
       font-family: 'Courier Prime', monospace;
       font-size: 12px; letter-spacing: 2px;
@@ -145,7 +161,7 @@
   }
 
   .hero h1 {
-      color: white; font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      color: white; font-size: clamp(1.8rem, 4.5vw, 3.2rem);
       font-weight: 800; line-height: 1.15; margin: 0 0 10px 0;
   }
 
@@ -161,8 +177,8 @@
   /* Snapshot Cards Overlay */
   .snapshot-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px; margin-top: -30px; padding: 0 20px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px; margin-top: 20px; padding: 0;
   }
 
   .snapshot-card {
@@ -179,8 +195,15 @@
 
   /* Content Sections */
   section {
-      background: white; padding: 40px; margin: 40px 0;
+      background: white; padding: 40px; margin: 30px 0;
       border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+
+  @media (max-width: 600px) {
+      section {
+          padding: 20px 15px;
+          margin: 20px 0;
+      }
   }
 
   h2 {
@@ -192,7 +215,8 @@
 
   /* Variable Cards */
   .var-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 16px; margin-top: 20px;
   }
 
@@ -212,8 +236,9 @@
       padding: 20px; border-radius: 8px;
       font-family: 'Courier Prime', 'Courier New', monospace;
       overflow-x: auto; margin: 20px 0;
-      text-align: center; font-size: 1.05rem;
+      text-align: center; font-size: 1rem;
       box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+      word-break: break-word;
   }
 
   .callout {
@@ -265,6 +290,8 @@
       background: var(--light);
       user-select: none;
       list-style: none;
+      flex-wrap: wrap;
+      gap: 8px;
   }
 
   summary.diag-summary::-webkit-details-marker { display: none; }
@@ -311,9 +338,26 @@
       font-weight: bold;
   }
 
+  /* Responsive Grid for Graphs inside Accordion */
+  .graph-grid {
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 20px; 
+      margin: 25px 0;
+  }
+
+  @media (max-width: 768px) {
+      .graph-grid {
+          grid-template-columns: 1fr; /* Single column on phones */
+      }
+      .two-col-plot {
+          grid-template-columns: 1fr !important;
+      }
+  }
+
   /* Data Tables */
   .table-wrap { overflow-x: auto; margin: 15px 0; border-radius: 8px; border: 1px solid #e2e8f0; }
-  table { width: 100%; border-collapse: collapse; background: white; font-size: 0.9rem; }
+  table { width: 100%; border-collapse: collapse; background: white; font-size: 0.9rem; white-space: nowrap; }
   thead th {
       background: var(--primary); color: white;
       text-align: left; padding: 12px 14px;
@@ -363,21 +407,14 @@
 
   /* Footer */
   footer {
-      text-align: center; padding: 40px;
-      background: var(--primary); color: white;
+      width: 100%;
+      text-align: center; 
+      padding: 30px 15px;
+      background: var(--primary); 
+      color: white;
       border-top: 5px solid var(--accent);
-      font-family: 'Courier Prime', monospace; font-size: 12px;
-  }
-
-  @media (max-width: 600px) {
-      main { padding: 16px 14px 60px; }
-      header.hero { padding: 2.2rem 1.4rem; }
-      section { padding: 24px 18px; margin: 24px 0; }
-      .snapshot-grid { padding: 0 10px; margin-top: -22px; gap: 14px; }
-      footer { padding: 26px 16px; font-size: 11px; }
-      table { font-size: 0.82rem; }
-      thead th, tbody td { padding: 8px 10px; }
-      .two-col-grid { grid-template-columns: 1fr !important; }
+      font-family: 'Courier Prime', monospace; 
+      font-size: 12px;
   }
 
   /* References List */
@@ -385,6 +422,7 @@
   .refs li {
       padding: 10px 0; border-bottom: 1px solid #e2e8f0;
       font-size: 0.9rem; display: flex; gap: 10px;
+      word-break: break-word;
   }
   .refs li::before {
       content: "►"; color: var(--accent); font-size: 10px; margin-top: 4px;
@@ -573,7 +611,7 @@
     </figure>
 <p style="font-size: 0.9rem;"> The normal probability plot (Q-Q plot) showed that the residuals mostly followed a straight line, indicating that they might be approximately normally distributed. We further used the JB test to confirm this assumption. </p>
               <p style="margin-top:0;"><strong>Jarque-Bera Test Specification:</strong></p>
-              <p style="font-size: 0.9rem;">The Jarque-Bera statistic  verify the assumption that residuals follow a normal distribution, we used the Jarque-Bera (JB) test. This test assesses whether the skewness (<i>S</i>) and (<i>K</i>) match a normal distribution (<i>S = 0</i>, <i>K</i> = 3). </p>
+              <p style="font-size: 0.9rem;">The Jarque-Bera statistic verify the assumption that residuals follow a normal distribution, we used the Jarque-Bera (JB) test. This test assesses whether the skewness (<i>S</i>) and (<i>K</i>) match a normal distribution (<i>S = 0</i>, <i>K</i> = 3). </p>
               <div class="formula-box" style="padding:10px; font-size:0.9rem;">
                 <span><i>JB</i> = </span>
       <span style="display: inline-flex; flex-direction: column; text-align: center; vertical-align: middle; padding: 0 4px;">
@@ -635,7 +673,7 @@
     Figure 2: Autocorrelation (ACF) &amp; Partial Autocorrelation (PACF) Residual Diagnostics
   </figcaption>
   
-  <div class="two-col-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: center;">
+  <div class="two-col-plot" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: center;">
     <div style="text-align: center;">
       <img src="acf_plot.jpg" alt="Autocorrelation Function Plot" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid #e2e8f0;">
       <span style="font-family: 'Courier Prime', monospace; font-size: 0.8rem; color: #555; margin-top: 6px; display: block;">Autocorrelation Function (ACF)</span>
@@ -723,7 +761,7 @@
   </p>
 
   <!-- 2-COLUMN GRID FOR THE 7 VARIABLE-WISE RESIDUAL PLOTS -->
-  <div class="two-col-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 25px 0;">
+  <div class="graph-grid">
     
     <!-- Graph 5.1 -->
     <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff;">
@@ -773,8 +811,8 @@
       </figcaption>
     </div>
 
-    <!-- Graph 5.7 (Centered in row if standalone) -->
-    <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff; grid-column: 1 / -1; max-width: 50%; justify-self: center; width: 100%;">
+    <!-- Graph 5.7 -->
+    <div style="text-align: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #ffffff;">
       <img src="res_x7.jpg" alt="Residuals vs Poverty Index" style="width: 100%; height: auto; display: block; border-radius: 4px; margin-bottom: 8px;">
       <figcaption style="font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
         Graph 5.7: Residuals vs. Poverty Index
@@ -836,8 +874,8 @@
     </ul>
 
     <!-- TABLE 6.2 VIF TEST VALUES -->
-    
-      <table style="width: 100%; max-width: 450px; margin: 0 auto; border-collapse: collapse;">
+    <div class="table-wrap">
+      <table style="width: 100%; border-collapse: collapse;">
         <thead>
           <tr>
             <th style="text-align: left;">Variables</th>
@@ -875,10 +913,10 @@
           </tr>
         </tbody>
       </table>
-      <p style="text-align: center; font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; margin-top: 8px; color: var(--primary);">
+    </div>
+    <p style="text-align: center; font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; margin-top: 8px; color: var(--primary);">
         TABLE 6.2 VIF Test Values
-      </p>
-   
+    </p>
 
     <!-- MULTICOLLINEARITY ANALYSIS PARAGRAPHS -->
     <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
@@ -901,7 +939,7 @@
   
   <div class="phase">
     <div class="phase-title">Remedy Step A: Weighted Least Squares (WLS)</div>
-    <p>Weights inversely proportional to residual variance were applied to down-weight high-variance observations. While coefficients adjusted, post-WLS Breusch-Pagan p-value remained 0.0002, again failing to fully solve heteroscedasticity[cite: 1].</p>
+    <p>Weights inversely proportional to residual variance were applied to down-weight high-variance observations. While coefficients adjusted, post-WLS Breusch-Pagan p-value remained 0.0002, again failing to fully solve heteroscedasticity.</p>
   </div>
 
   <div class="phase">
@@ -1065,10 +1103,10 @@
         </tr>
       </tbody>
     </table>
-    <p style="text-align: center; font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; margin-top: 8px; color: var(--primary);">
-      TABLE 6.3 Principal Component Loadings
-    </p>
   </div>
+  <p style="text-align: center; font-family: 'Courier Prime', monospace; font-size: 0.85rem; font-weight: bold; margin-top: 8px; color: var(--primary);">
+    TABLE 6.3 Principal Component Loadings
+  </p>
 
   <!-- INTERPRETING PRINCIPAL COMPONENTS -->
   <h3>6.4 Interpreting Principal Components</h3>
@@ -1189,7 +1227,7 @@
       <h2>07. Concluding Remarks &amp; Policy Implications</h2>
       <p class="lede">Three core statistical hurdles were systematically overcome in this study:</p>
       <ol style="padding-left: 20px;">
-        <li><strong>Residual Non-normality:</strong> Resolved through Log transformation and PCA component structuring[cite: 1].</li>
+        <li><strong>Residual Non-normality:</strong> Resolved through Log transformation and PCA component structuring.</li>
         <li><strong>Heteroscedasticity:</strong> Solved via Log-linear specification.</li>
         <li><strong>Multicollinearity:</strong> Eliminated through Principal Component Analysis.</li>
       </ol>
